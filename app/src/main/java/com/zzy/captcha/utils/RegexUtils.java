@@ -27,4 +27,7 @@ public class RegexUtils {
     public static String getExplain(Context context){
         return context.getResources().getString(R.string.explain);
     }
+    public static int getNotificationId(){
+        return 100;
+    }
 }

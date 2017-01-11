@@ -39,7 +39,7 @@
     <string name="version">版本</string>
     <string name="premissionMessage">自Android6.0，由于新增权限管理API\n\n若要正常使用，请接受以下权限申请</string>
     <string name="premissionTitle">提示</string>
-    <string name="smsTest">短信测试</string>
+    <string name="smsTest">验证码测试</string>
     <string name="errorEditString">没有输入字符!</string>
     <string name="githubCaptcha">https://github.com/zzyandzzy/captcha</string>
     <string name="copy">复制</string>

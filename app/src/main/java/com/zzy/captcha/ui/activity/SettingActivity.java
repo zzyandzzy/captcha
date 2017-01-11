@@ -1,6 +1,5 @@
 package com.zzy.captcha.ui.activity;
 
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -221,9 +220,6 @@ public class SettingActivity extends MaterialAboutActivity {
 
     private void init() {
         sharedPreferencesUtils = new SharedPreferencesUtils(this);
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager != null)
-            notificationManager.cancel(1);
     }
 
     @Override

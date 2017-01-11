@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.zzy.captcha.R;
-import com.zzy.captcha.utils.CopyCaptchaUtila;
+import com.zzy.captcha.service.NotificationClickReceiver;
 import com.zzy.captcha.utils.RegexUtils;
 import com.zzy.captcha.utils.SharedPreferencesUtils;
 
@@ -27,7 +27,6 @@ public class EditTextDialog extends MaterialDialog {
     private EditText message;
     private SharedPreferencesUtils sharedPreferencesUtils;
     private NotificationManager notificationManager;
-    private int notificationId = 1;
 
     public EditTextDialog(Context context) {
         super(context);
@@ -128,37 +127,28 @@ public class EditTextDialog extends MaterialDialog {
         sharedPreferencesUtils = new SharedPreferencesUtils(context);
     }
 
-    private void addNotification(Context context, String fromAddress, String message) {
+    private void addNotification(Context context, String title, String message) {
         //获取通知管理器服务
         notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        PendingIntent pendingIntent = createDisplayMessageIntent(context, message,notificationId);
+        PendingIntent pendingIntent = createDisplayMessageIntent(context, message,RegexUtils.getNotificationId());
         //新建一个notification
         Notification.Builder builder = new Notification.Builder(context)
                 .setTicker(message)
                 .setWhen(System.currentTimeMillis())
-                .setContentTitle(fromAddress)
+                .setContentTitle(title)
                 .setContentText(message)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setDefaults(Notification.DEFAULT_ALL);
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setContentIntent(pendingIntent);
         builder.setFullScreenIntent(pendingIntent, true);
-        Notification notification = builder.getNotification();
         //开始通知
-        notificationManager.notify(notificationId, notification);
+        notificationManager.notify(RegexUtils.getNotificationId(), builder.getNotification());
     }
 
     private PendingIntent createDisplayMessageIntent(Context context,String message,int notificationId) {
-        Intent intent = new Intent();
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        intent.setClass(context, SettingActivity.class);
-        PendingIntent pendingIntent= PendingIntent.getActivity(context, 0, intent, notificationId);
-        String regex,copytext,tigger,keyword;
-        regex = sharedPreferencesUtils.getString("smsRegex",RegexUtils.getSmsRegex());
-        copytext = sharedPreferencesUtils.getString("copytext",RegexUtils.getCopyText(context));
-        keyword = sharedPreferencesUtils.getString("keyword",RegexUtils.getKeywordRegex(context));
-        tigger = sharedPreferencesUtils.getString("tigger",RegexUtils.getTiggerRegex(context));
-        CopyCaptchaUtila.CopyCptcha(context,message, regex,keyword,tigger,copytext);
-//        SettingActivity settingActivity = (SettingActivity)context;
-//        settingActivity.finish();
+        Intent intent = new Intent(context, NotificationClickReceiver.class);
+        intent.putExtra("message",message);
+        PendingIntent pendingIntent= PendingIntent.getBroadcast(context, 0, intent, notificationId);
         return pendingIntent;
     }
 }

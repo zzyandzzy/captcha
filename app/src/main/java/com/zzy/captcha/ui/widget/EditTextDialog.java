@@ -50,7 +50,7 @@ public class EditTextDialog extends MaterialDialog {
                 switch (lis){
                     case "smstest":
                         if (!isMessageNull(message.getText().toString())){
-                            addNotification(context,"短信测试",message.getText().toString());
+                            addNotification(context,context.getString(R.string.smsTest),message.getText().toString());
                             sharedPreferencesUtils.putString("smstest",message.getText().toString());
                             dismiss();
                         }
@@ -115,7 +115,7 @@ public class EditTextDialog extends MaterialDialog {
             return false;
         }
         else{
-            Toast.makeText(context,"没有输入字符!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.errorEditString,Toast.LENGTH_SHORT).show();
             return true;
         }
     }

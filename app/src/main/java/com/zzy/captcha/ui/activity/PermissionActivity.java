@@ -46,16 +46,16 @@ public class PermissionActivity extends AppCompatActivity {
 
     private void Notice(){
         MaterialDialog builder = new MaterialDialog(this);
-        builder.setTitle("提示");
-        builder.setMessage("自Android6.0，由于新增权限管理API\n\n若要正常使用，请接受以下权限申请");
-        builder.setPositiveButton("明白", new View.OnClickListener() {
+        builder.setTitle(getString(R.string.premissionTitle));
+        builder.setMessage(getString(R.string.premissionMessage));
+        builder.setPositiveButton(R.string.know, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PmRequest(PER_ALL,666);
             }
         });
 
-        builder.setNegativeButton("取消", new View.OnClickListener() {
+        builder.setNegativeButton(R.string.editDialog_cancel, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

@@ -31,9 +31,6 @@ import me.drakeet.materialdialog.MaterialDialog;
  */
 
 public class SettingActivity extends MaterialAboutActivity {
-    String SENT_SMS_ACTION="SENT_SMS_ACTION";
-    String DELIVERED_SMS_ACTION="DELIVERED_SMS_ACTION";
-
     private MaterialAboutCard.Builder appCardBuilder;
     private MaterialAboutCard.Builder authorCardBuilder;
     private MaterialAboutCard.Builder smsTestBuilder;
@@ -49,7 +46,7 @@ public class SettingActivity extends MaterialAboutActivity {
                 .build());
         try {
             appCardBuilder.addItem(ConvenienceBuilder.createVersionActionItem(context,
-                    "版本", new IconicsDrawable(context)
+                    getString(R.string.version), new IconicsDrawable(context)
                             .icon(GoogleMaterial.Icon.gmd_perm_device_information)
                             .color(ContextCompat.getColor(context, R.color.icon))
                             .sizeDp(18)));
@@ -70,7 +67,7 @@ public class SettingActivity extends MaterialAboutActivity {
                 })
                 .build());
         appCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("使用说明")
+                .text(R.string.Instructions)
                 .icon(new IconicsDrawable(context)
                         .icon(GoogleMaterial.Icon.gmd_info_outline)
                         .color(ContextCompat.getColor(context, R.color.icon))
@@ -79,9 +76,9 @@ public class SettingActivity extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
                         final MaterialDialog materialDialog = new MaterialDialog(SettingActivity.this);
-                        materialDialog.setTitle("使用说明");
+                        materialDialog.setTitle(R.string.Instructions);
                         materialDialog.setMessage(RegexUtils.getExplain(SettingActivity.this));
-                        materialDialog.setPositiveButton("知道了", new View.OnClickListener() {
+                        materialDialog.setPositiveButton(getString(R.string.know), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 materialDialog.dismiss();
@@ -93,10 +90,10 @@ public class SettingActivity extends MaterialAboutActivity {
                 .build());
 
         smsTestBuilder = new MaterialAboutCard.Builder();
-        smsTestBuilder.title("功能");
+        smsTestBuilder.title(R.string.function);
         smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("测试验证码")
-                .subText("测试验证码是否可以正确复制")
+                .text(R.string.smstestText)
+                .subText(R.string.smstestSubText)
                 .icon(new IconicsDrawable(context)
                         .icon(GoogleMaterial.Icon.gmd_sms)
                         .color(ContextCompat.getColor(context, R.color.icon))
@@ -106,14 +103,14 @@ public class SettingActivity extends MaterialAboutActivity {
                     public void onClick() {
                         String regex;
                         regex = sharedPreferencesUtils.getString("smstest",RegexUtils.getSmsTest(SettingActivity.this));
-                        EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,"测试"
-                                ,regex,"测试","取消","smstest");
+                        EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.smstestText)
+                                ,regex,getString(R.string.editDialog_test),getString(R.string.editDialog_cancel),"smstest");
                     }
                 })
                 .build());
         smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("关键字")
-                .subText("触发自动解析的关键字")
+                .text(R.string.keywordText)
+                .subText(R.string.keywordSubtext)
                 .icon(new IconicsDrawable(context)
                         .icon(GoogleMaterial.Icon.gmd_short_text)
                         .color(ContextCompat.getColor(context, R.color.icon))
@@ -123,14 +120,14 @@ public class SettingActivity extends MaterialAboutActivity {
                     public void onClick() {
                         String regex;
                         regex = sharedPreferencesUtils.getString("keyword",RegexUtils.getKeywordRegex(SettingActivity.this));
-                        EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,"关键字"
-                                ,regex,"确定","默认","keyword");
+                        EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.keywordText)
+                                ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_close),"keyword");
                     }
                 })
                 .build());
         smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("触发字")
-                .subText("触发自动解析的关键字")
+                .text(R.string.tiggerText)
+                .subText(R.string.tiggerSubText)
                 .icon(new IconicsDrawable(context)
                         .icon(GoogleMaterial.Icon.gmd_text_format)
                         .color(ContextCompat.getColor(context, R.color.icon))
@@ -140,14 +137,14 @@ public class SettingActivity extends MaterialAboutActivity {
                     public void onClick() {
                         String regex;
                         regex = sharedPreferencesUtils.getString("tigger",RegexUtils.getTiggerRegex(SettingActivity.this));
-                        EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,"触发字"
-                                ,regex,"确定","默认","tigger");
+                        EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.tiggerText)
+                                ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_close),"tigger");
                     }
                 })
                 .build());
         smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("正则匹配验证码")
-                .subText("测试正则验证码是否正确")
+                .text(R.string.smsRegexText)
+                .subText(R.string.smsRegexSubText)
                 .icon(new IconicsDrawable(context)
                         .icon(GoogleMaterial.Icon.gmd_edit)
                         .color(ContextCompat.getColor(context, R.color.icon))
@@ -157,14 +154,14 @@ public class SettingActivity extends MaterialAboutActivity {
                     public void onClick() {
                         String regex;
                         regex = sharedPreferencesUtils.getString("smsRegex",RegexUtils.getSmsRegex());
-                        EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,"正则表达式"
-                                ,regex,"确定","默认","smsregex");
+                        EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.smsRegexText)
+                                ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_close),"smsregex");
                     }
                 })
                 .build());
         smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text(Html.fromHtml("<font color="+getResources().getColor(R.color.colorPrimary)+">提示文本</font>"))
-                .subText(Html.fromHtml("<font color="+getResources().getColor(R.color.colorPrimary)+">验证码提示文本</font>"))
+                .text(Html.fromHtml("<font color="+getResources().getColor(R.color.colorPrimary)+getString(R.string.copyText)))
+                .subText(Html.fromHtml("<font color="+getResources().getColor(R.color.colorPrimary)+getString(R.string.copytextSubText)))
                 .icon(new IconicsDrawable(context)
                         .icon(GoogleMaterial.Icon.gmd_text_fields)
                         .color(ContextCompat.getColor(context, R.color.colorPrimary))
@@ -174,28 +171,28 @@ public class SettingActivity extends MaterialAboutActivity {
                     public void onClick() {
                         String regex;
                         regex = sharedPreferencesUtils.getString("copytext",RegexUtils.getCopyText(SettingActivity.this));
-                        EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,"提示文本"
-                                ,regex,"确定","默认","copytext");
+                        EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.copyText)
+                                ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_close),"copytext");
                     }
                 })
                 .build());
 
         authorCardBuilder = new MaterialAboutCard.Builder();
-        authorCardBuilder.title("关于");
+        authorCardBuilder.title(R.string.about);
 
         authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("zzyandzzy")
-                .subText("1428658308@qq.com")
+                .text(R.string.author)
+                .subText(R.string.authorEmail)
                 .icon(new IconicsDrawable(context)
                         .icon(GoogleMaterial.Icon.gmd_person)
                         .color(ContextCompat.getColor(context, R.color.icon))
                         .sizeDp(18))
                 .setOnClickListener(ConvenienceBuilder.createWebsiteOnClickAction(context,
-                        Uri.parse("https://github.com/zzyandzzy")))
+                        Uri.parse(getString(R.string.githubAuthor))))
                 .build());
         authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("加群")
-                .subText("iCode交流群(124593121)")
+                .text(R.string.addGroup)
+                .subText(R.string.icodeGroup)
                 .icon(new IconicsDrawable(context)
                         .icon(GoogleMaterial.Icon.gmd_group_add)
                         .color(ContextCompat.getColor(context, R.color.icon))
@@ -208,7 +205,7 @@ public class SettingActivity extends MaterialAboutActivity {
                 })
                 .build());
         authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("GitHub")
+                .text(R.string.github)
                 .icon(new IconicsDrawable(context)
                         .icon(CommunityMaterial.Icon.cmd_github_circle)
                         .color(ContextCompat.getColor(context, R.color.icon))
@@ -261,7 +258,7 @@ public class SettingActivity extends MaterialAboutActivity {
             return true;
         } catch (Exception e) {
             // 未安装手Q或安装的版本不支持
-            Toast.makeText(SettingActivity.this,"未安装手Q或安装的版本不支持",Toast.LENGTH_SHORT).show();
+            Toast.makeText(SettingActivity.this, R.string.errorAddQQGroup,Toast.LENGTH_SHORT).show();
             return false;
         }
     }

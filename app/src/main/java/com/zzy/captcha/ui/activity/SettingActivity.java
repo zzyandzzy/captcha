@@ -160,8 +160,8 @@ public class SettingActivity extends MaterialAboutActivity {
                 })
                 .build());
         smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text(Html.fromHtml("<font color="+getResources().getColor(R.color.colorPrimary)+getString(R.string.copyText)))
-                .subText(Html.fromHtml("<font color="+getResources().getColor(R.color.colorPrimary)+getString(R.string.copytextSubText)))
+                .text(Html.fromHtml("<font color="+getResources().getColor(R.color.colorPrimary) + ">"+getString(R.string.copyText)+"</font>"))
+                .subText(Html.fromHtml("<font color="+getResources().getColor(R.color.colorPrimary)+">"+getString(R.string.copytextSubText)+"</font>"))
                 .icon(new IconicsDrawable(context)
                         .icon(GoogleMaterial.Icon.gmd_text_fields)
                         .color(ContextCompat.getColor(context, R.color.colorPrimary))

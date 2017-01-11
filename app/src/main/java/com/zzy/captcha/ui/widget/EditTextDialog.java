@@ -137,7 +137,7 @@ public class EditTextDialog extends MaterialDialog {
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle(title)
                 .setContentText(message)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentIntent(pendingIntent);
         builder.setFullScreenIntent(pendingIntent, true);

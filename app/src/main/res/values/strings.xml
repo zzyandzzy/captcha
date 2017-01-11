@@ -15,8 +15,8 @@
     <string name="smsRegexSubText">测试正则验证码是否正确</string>
     <string name="editDialog_ok">确定</string>
     <string name="editDialog_close">默认</string>
-    <string name="copyText"><![CDATA[>提示文本</font>]]></string>
-    <string name="copytextSubText"><![CDATA[>验证码提示文本</font>]]></string>
+    <string name="copyText">提示文本</string>
+    <string name="copytextSubText">验证码提示文本</string>
     <string name="about">关于</string>
     <string name="author">zzyandzzy</string>
     <string name="authorEmail">1428658308@qq.com</string>

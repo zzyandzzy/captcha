@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<notices>
+
+    <notice>
+        <name>LicensesDialog</name>
+        <url>https://github.com/PSDev/LicensesDialog</url>
+        <copyright>Copyright 2013-2016 Philip Schiffer</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
+    <notice>
+        <name>Material Dialog</name>
+        <url>https://github.com/drakeet/MaterialDialog</url>
+        <copyright>Copyright 2014 drakeet</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
+    <notice>
+        <name>Android developers should collect the following utils</name>
+        <url>https://github.com/Blankj/AndroidUtilCode</url>
+        <copyright>Copyright 2016 Blankj</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
+    <notice>
+        <name>material-about-library</name>
+        <url>https://github.com/daniel-stoneuk/material-about-library</url>
+        <copyright>Copyright 2016 Daniel Stone</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
+    <notice>
+        <name>Android-Iconics</name>
+        <url>https://github.com/mikepenz/Android-Iconics</url>
+        <copyright>Copyright 2016 Mike Penz</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+</notices>

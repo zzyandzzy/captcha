@@ -41,4 +41,7 @@
     <string name="premissionTitle">提示</string>
     <string name="smsTest">短信测试</string>
     <string name="errorEditString">没有输入字符!</string>
+    <string name="githubCaptcha">https://github.com/zzyandzzy/captcha</string>
+    <string name="copy">复制</string>
+    <string name="captcha">验证码</string>
 </resources>

@@ -26,6 +26,8 @@ public class EditTextDialog extends MaterialDialog {
     private View view;
     private EditText message;
     private SharedPreferencesUtils sharedPreferencesUtils;
+    private NotificationManager notificationManager;
+    private int notificationId = 1;
 
     public EditTextDialog(Context context) {
         super(context);
@@ -127,32 +129,36 @@ public class EditTextDialog extends MaterialDialog {
     }
 
     private void addNotification(Context context, String fromAddress, String message) {
-        int notificationId = 110;
+        //获取通知管理器服务
+        notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        PendingIntent pendingIntent = createDisplayMessageIntent(context, message,notificationId);
         //新建一个notification
-        Notification.Builder notification = new Notification.Builder(context)
+        Notification.Builder builder = new Notification.Builder(context)
                 .setTicker(message)
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle(fromAddress)
                 .setContentText(message)
-                .setSmallIcon(R.drawable.ic_notify)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setContentIntent(createDisplayMessageIntent(context, fromAddress, message,
-                        notificationId));
-        //获取通知管理器服务
-        NotificationManager notificationManager =
-                (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setDefaults(Notification.DEFAULT_ALL);
+        builder.setFullScreenIntent(pendingIntent, true);
+        Notification notification = builder.getNotification();
         //开始通知
-        notificationManager.notify(notificationId, notification.getNotification());
+        notificationManager.notify(notificationId, notification);
     }
 
-    private PendingIntent createDisplayMessageIntent(Context context, String fromAddress, String message, int notificationId) {
+    private PendingIntent createDisplayMessageIntent(Context context,String message,int notificationId) {
+        Intent intent = new Intent();
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.setClass(context, SettingActivity.class);
+        PendingIntent pendingIntent= PendingIntent.getActivity(context, 0, intent, notificationId);
         String regex,copytext,tigger,keyword;
         regex = sharedPreferencesUtils.getString("smsRegex",RegexUtils.getSmsRegex());
         copytext = sharedPreferencesUtils.getString("copytext",RegexUtils.getCopyText(context));
         keyword = sharedPreferencesUtils.getString("keyword",RegexUtils.getKeywordRegex(context));
         tigger = sharedPreferencesUtils.getString("tigger",RegexUtils.getTiggerRegex(context));
         CopyCaptchaUtila.CopyCptcha(context,message, regex,keyword,tigger,copytext);
-        PendingIntent pendingIntent= PendingIntent.getActivity(context, 1, new Intent(), notificationId);
+//        SettingActivity settingActivity = (SettingActivity)context;
+//        settingActivity.finish();
         return pendingIntent;
     }
 }

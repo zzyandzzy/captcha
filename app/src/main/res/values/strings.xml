@@ -3,8 +3,8 @@
     <string name="setting">设置</string>
     <string name="licences">许可证</string>
     <string name="ok">确定</string>
-    <string name="keyword">(验证码|校验码|动态码|确认码|随机码|验证|校验|验证代码|验证密码|动态密码|校验密码|随机密码|确认密码|激活码|兑换码|认证码|认证号码|认证密码|交易码|交易密码|授权码|操作码|密码|提取码|安全代码)</string>
-    <string name="tigger">(是:G-|是：|是:|为：|为:|为 |：|:| |)</string>
+    <string name="keyword">(验证|校验|动态|确认|随机|激活|兑换|认证|交易|授权|操作|密码|提取|安全)+(码|代码|号码|密码)</string>
+    <string name="tigger">(是|为|:|：| |G-)+(:|：| |G-|)</string>
     <string name="copytext">已复制验证码:</string>
     <string name="smstest">【xx银行】您正在使用xx银行xx支付快捷支付，验证码：233333,付款金额100.00元。[工作人员不会索取，请勿泄露]</string>
     <string name="explain">1：关键字\n关键字是短信中验证码的前一段，工具通过关键字找到验证码部分，比如：Google验证码是:223333工具找到验证码关键字而且只找一次就可以知道后面的验证码是多少了。(关键字支持正则表达式)

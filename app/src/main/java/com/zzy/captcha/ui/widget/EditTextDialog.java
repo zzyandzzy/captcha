@@ -14,6 +14,7 @@ import com.zzy.captcha.R;
 import com.zzy.captcha.service.NotificationClickReceiver;
 import com.zzy.captcha.utils.RegexUtils;
 import com.zzy.captcha.utils.SharedPreferencesUtils;
+import com.zzy.captcha.utils.XposedPreferencesUtils;
 
 import me.drakeet.materialdialog.MaterialDialog;
 
@@ -77,6 +78,13 @@ public class EditTextDialog extends MaterialDialog {
                     case "copytext":
                         if (!isMessageNull(message.getText().toString())){
                             sharedPreferencesUtils.putString("copytext",message.getText().toString());
+                            dismiss();
+                        }
+                        break;
+                    case "systemuitext":
+                        if (!isMessageNull(message.getText().toString())){
+                            XposedPreferencesUtils xposedPreferencesUtils = new XposedPreferencesUtils(context);
+                            xposedPreferencesUtils.putString("systemuitext",message.getText().toString());
                             dismiss();
                         }
                         break;

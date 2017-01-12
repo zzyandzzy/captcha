@@ -44,4 +44,6 @@
     <string name="githubCaptcha">https://github.com/zzyandzzy/captcha</string>
     <string name="copy">复制</string>
     <string name="captcha">验证码</string>
+    <string name="xposed">xposed</string>
+    <string name="gdq"> i GDQ</string>
 </resources>

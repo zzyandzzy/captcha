@@ -1,8 +1,8 @@
 package com.zzy.captcha.utils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.content.Context;
 
 public class SharedPreferencesUtils
 {

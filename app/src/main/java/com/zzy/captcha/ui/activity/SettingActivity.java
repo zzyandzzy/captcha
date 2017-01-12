@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.zzy.captcha.R;
 import com.zzy.captcha.ui.widget.EditTextDialog;
 import com.zzy.captcha.utils.RegexUtils;
 import com.zzy.captcha.utils.SharedPreferencesUtils;
+import com.zzy.captcha.utils.XposedPreferencesUtils;
 
 import de.psdev.licensesdialog.LicensesDialog;
 import me.drakeet.materialdialog.MaterialDialog;
@@ -179,7 +181,26 @@ public class SettingActivity extends MaterialAboutActivity {
 
         authorCardBuilder = new MaterialAboutCard.Builder();
         authorCardBuilder.title(R.string.about);
-
+        authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+                .text(R.string.xposed)
+                .icon(new IconicsDrawable(context)
+                        .icon(GoogleMaterial.Icon.gmd_edit)
+                        .color(ContextCompat.getColor(context, R.color.icon))
+                        .sizeDp(18))
+                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                    @Override
+                    public void onClick() {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
+                            String regex;
+                            XposedPreferencesUtils xposedPreferencesUtils = new XposedPreferencesUtils(context);
+                            regex = xposedPreferencesUtils.getString("systemuitext",getString(R.string.gdq));
+                            EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.xposed)
+                                    ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_cancel),"systemuitext");
+                        }else
+                           Toast.makeText(SettingActivity.this,"Xposed不支持安卓7.0",Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build());
         authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
                 .text(R.string.author)
                 .subText(R.string.authorEmail)

@@ -30,4 +30,7 @@ public class RegexUtils {
     public static int getNotificationId(){
         return 100;
     }
+    public static String getPackageName(){
+        return "com.zzy.captcha";
+    }
 }

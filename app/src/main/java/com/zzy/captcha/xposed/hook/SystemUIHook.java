@@ -1,6 +1,9 @@
-package com.zzy.captcha.xposed;
+package com.zzy.captcha.xposed.hook;
 
 import android.widget.TextView;
+
+import com.zzy.captcha.xposed.utils.PreferencesUtils;
+import com.zzy.captcha.xposed.utils.XposedUtils;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
@@ -10,10 +13,9 @@ import de.robv.android.xposed.XposedHelpers;
  */
 
 public class SystemUIHook {
-    private static String PACKAGE_SYSTEMUI_CLOCK = "com.android.systemui.statusbar.policy.Clock";
 
     public static void hookSystemUI(ClassLoader classLoader){
-        XposedHelpers.findAndHookMethod(PACKAGE_SYSTEMUI_CLOCK, classLoader, "updateClock", new XC_MethodHook() {
+       XposedHelpers.findAndHookMethod(XposedUtils.SYSTEMUI_STATUSBAR_POLICY_CLOCK, classLoader, "updateClock", new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
             }
@@ -22,7 +24,7 @@ public class SystemUIHook {
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 TextView textView = (TextView) param.thisObject;
                 String str = textView.getText().toString();
-                textView.setText(str + PreferencesUtils.getText());
+                textView.setText(str + PreferencesUtils.getString("systemuitext"," i GDQ"));
             }
         });
     }

@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.zzy.captcha.R;
-import com.zzy.captcha.utils.SharedPreferencesUtils;
 
 import me.drakeet.materialdialog.MaterialDialog;
 
@@ -20,7 +19,6 @@ import me.drakeet.materialdialog.MaterialDialog;
  */
 
 public class PermissionActivity extends AppCompatActivity {
-    private SharedPreferencesUtils sharedPreferencesUtils;
     private boolean isSingle;
     private String[] PER_ALL = {
             "android.permission.READ_EXTERNAL_STORAGE",
@@ -73,7 +71,6 @@ public class PermissionActivity extends AppCompatActivity {
     }
 
     private void init() {
-        sharedPreferencesUtils = new SharedPreferencesUtils(this);
     }
 
     private boolean NeedPremission() {

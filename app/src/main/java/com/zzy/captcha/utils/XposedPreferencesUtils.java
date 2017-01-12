@@ -23,11 +23,27 @@ public class XposedPreferencesUtils {
         }
     }
      public void putString(String key,String value){
-         editor.putString(key,value);
-         editor.apply();
+         editor.putString(key,value).apply();
      }
 
     public String getString(String key,String defValue){
         return sharedPreferences.getString(key,defValue);
     }
+
+    public void putInt(String key,int value){
+        editor.putInt(key,value).apply();
+    }
+
+    public int getInt(String key,int def){
+        return sharedPreferences.getInt(key,def);
+    }
+
+    public void putBoolean(String key,boolean value){
+        editor.putBoolean(key,value).apply();
+    }
+
+    public boolean getBoolean(String key,boolean def){
+        return sharedPreferences.getBoolean(key,def);
+    }
+
 }

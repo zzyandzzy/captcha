@@ -37,6 +37,7 @@ public class SettingActivity extends MaterialAboutActivity {
     private MaterialAboutCard.Builder authorCardBuilder;
     private MaterialAboutCard.Builder smsTestBuilder;
     private SharedPreferencesUtils sharedPreferencesUtils;
+    private XposedPreferencesUtils xposedPreferencesUtils;
 
     @Override
     protected MaterialAboutList getMaterialAboutList(final Context context) {
@@ -104,7 +105,10 @@ public class SettingActivity extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
                         String regex;
-                        regex = sharedPreferencesUtils.getString("smstest",RegexUtils.getSmsTest(SettingActivity.this));
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                            regex = xposedPreferencesUtils.getString("smstest",RegexUtils.SmsTest);
+                        else
+                            regex = sharedPreferencesUtils.getString("smstest",RegexUtils.SmsTest);
                         EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.smstestText)
                                 ,regex,getString(R.string.editDialog_test),getString(R.string.editDialog_cancel),"smstest");
                     }
@@ -121,7 +125,10 @@ public class SettingActivity extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
                         String regex;
-                        regex = sharedPreferencesUtils.getString("keyword",RegexUtils.getKeywordRegex(SettingActivity.this));
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                            regex = xposedPreferencesUtils.getString("keyword",RegexUtils.Keyword);
+                        else
+                            regex = sharedPreferencesUtils.getString("keyword",RegexUtils.Keyword);
                         EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.keywordText)
                                 ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_close),"keyword");
                     }
@@ -138,7 +145,10 @@ public class SettingActivity extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
                         String regex;
-                        regex = sharedPreferencesUtils.getString("tigger",RegexUtils.getTiggerRegex(SettingActivity.this));
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                            regex = xposedPreferencesUtils.getString("tigger",RegexUtils.TiggerRegex);
+                        else
+                            regex = sharedPreferencesUtils.getString("tigger",RegexUtils.TiggerRegex);
                         EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.tiggerText)
                                 ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_close),"tigger");
                     }
@@ -155,7 +165,10 @@ public class SettingActivity extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
                         String regex;
-                        regex = sharedPreferencesUtils.getString("smsRegex",RegexUtils.getSmsRegex());
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                            regex = xposedPreferencesUtils.getString("smsRegex",RegexUtils.SmsRegex);
+                        else
+                            regex = sharedPreferencesUtils.getString("smsRegex",RegexUtils.SmsRegex);
                         EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.smsRegexText)
                                 ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_close),"smsregex");
                     }
@@ -172,35 +185,37 @@ public class SettingActivity extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
                         String regex;
-                        regex = sharedPreferencesUtils.getString("copytext",RegexUtils.getCopyText(SettingActivity.this));
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                            regex = xposedPreferencesUtils.getString("copytext",RegexUtils.CpoyText);
+                        else
+                            regex = sharedPreferencesUtils.getString("copytext",RegexUtils.CpoyText);
                         EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.copyText)
                                 ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_close),"copytext");
                     }
                 })
                 .build());
-
-        authorCardBuilder = new MaterialAboutCard.Builder();
-        authorCardBuilder.title(R.string.about);
-        authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text(R.string.xposed)
+        smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
+                .text(Html.fromHtml("<font color="+getResources().getColor(R.color.colorRed) + ">"+getString(R.string.xposed)+"</font>"))
                 .icon(new IconicsDrawable(context)
-                        .icon(GoogleMaterial.Icon.gmd_edit)
-                        .color(ContextCompat.getColor(context, R.color.icon))
+                        .icon(GoogleMaterial.Icon.gmd_extension)
+                        .color(ContextCompat.getColor(context, R.color.colorRed))
                         .sizeDp(18))
                 .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
                             String regex;
-                            XposedPreferencesUtils xposedPreferencesUtils = new XposedPreferencesUtils(context);
                             regex = xposedPreferencesUtils.getString("systemuitext",getString(R.string.gdq));
-                            EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.xposed)
+                            EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.xposed_systemuitext)
                                     ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_cancel),"systemuitext");
                         }else
-                           Toast.makeText(SettingActivity.this,"Xposed不支持安卓7.0",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingActivity.this,"Xposed不支持安卓7.0",Toast.LENGTH_SHORT).show();
                     }
                 })
                 .build());
+
+        authorCardBuilder = new MaterialAboutCard.Builder();
+        authorCardBuilder.title(R.string.about);
         authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
                 .text(R.string.author)
                 .subText(R.string.authorEmail)
@@ -241,6 +256,7 @@ public class SettingActivity extends MaterialAboutActivity {
 
     private void init() {
         sharedPreferencesUtils = new SharedPreferencesUtils(this);
+        xposedPreferencesUtils = new XposedPreferencesUtils(this);
     }
 
     @Override

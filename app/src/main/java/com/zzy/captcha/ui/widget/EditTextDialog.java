@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -26,6 +27,7 @@ public class EditTextDialog extends MaterialDialog {
     private Context context;
     private View view;
     private EditText message;
+    private XposedPreferencesUtils xposedPreferencesUtils;
     private SharedPreferencesUtils sharedPreferencesUtils;
     private NotificationManager notificationManager;
 
@@ -53,37 +55,51 @@ public class EditTextDialog extends MaterialDialog {
                     case "smstest":
                         if (!isMessageNull(message.getText().toString())){
                             addNotification(context,context.getString(R.string.smsTest),message.getText().toString());
-                            sharedPreferencesUtils.putString("smstest",message.getText().toString());
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                                xposedPreferencesUtils.putString("smstest",message.getText().toString());
+                            else
+                                sharedPreferencesUtils.putString("smstest",message.getText().toString());
                             dismiss();
                         }
                         break;
                     case "smsregex":
                         if (!isMessageNull(message.getText().toString())){
-                            sharedPreferencesUtils.putString("smsRegex",message.getText().toString());
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                                xposedPreferencesUtils.putString("smsRegex",message.getText().toString());
+                            else
+                                sharedPreferencesUtils.putString("smsRegex",message.getText().toString());
                             dismiss();
                         }
                         break;
                     case "keyword":
                         if (!isMessageNull(message.getText().toString())){
-                            sharedPreferencesUtils.putString("keyword",message.getText().toString());
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                                xposedPreferencesUtils.putString("keyword",message.getText().toString());
+                            else
+                                sharedPreferencesUtils.putString("keyword",message.getText().toString());
                             dismiss();
                         }
                         break;
                     case "tigger":
                         if (!isMessageNull(message.getText().toString())){
-                            sharedPreferencesUtils.putString("tigger",message.getText().toString());
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                                xposedPreferencesUtils.putString("tigger",message.getText().toString());
+                            else
+                                sharedPreferencesUtils.putString("tigger",message.getText().toString());
                             dismiss();
                         }
                         break;
                     case "copytext":
                         if (!isMessageNull(message.getText().toString())){
-                            sharedPreferencesUtils.putString("copytext",message.getText().toString());
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                                xposedPreferencesUtils.putString("copytext",message.getText().toString());
+                            else
+                                sharedPreferencesUtils.putString("copytext",message.getText().toString());
                             dismiss();
                         }
                         break;
                     case "systemuitext":
                         if (!isMessageNull(message.getText().toString())){
-                            XposedPreferencesUtils xposedPreferencesUtils = new XposedPreferencesUtils(context);
                             xposedPreferencesUtils.putString("systemuitext",message.getText().toString());
                             dismiss();
                         }
@@ -99,16 +115,16 @@ public class EditTextDialog extends MaterialDialog {
                 public void onClick(View v) {
                     switch (lis){
                         case "smsregex":
-                            message.setText(RegexUtils.getSmsRegex());
+                            message.setText(RegexUtils.SmsRegex);
                             break;
                         case "keyword":
-                            message.setText(RegexUtils.getKeywordRegex(context));
+                            message.setText(RegexUtils.Keyword);
                             break;
                         case "tigger":
-                            message.setText(RegexUtils.getTiggerRegex(context));
+                            message.setText(RegexUtils.TiggerRegex);
                             break;
                         case "copytext":
-                            message.setText(RegexUtils.getCopyText(context));
+                            message.setText(RegexUtils.CpoyText);
                             break;
                         default:
                             dismiss();
@@ -132,6 +148,7 @@ public class EditTextDialog extends MaterialDialog {
     private void init() {
         view = LayoutInflater.from(context).inflate(R.layout.dialog_edit,null);
         this.setContentView(view);
+        xposedPreferencesUtils = new XposedPreferencesUtils(context);
         sharedPreferencesUtils = new SharedPreferencesUtils(context);
     }
 

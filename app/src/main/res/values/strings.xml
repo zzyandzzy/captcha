@@ -3,10 +3,6 @@
     <string name="setting">设置</string>
     <string name="licences">许可证</string>
     <string name="ok">确定</string>
-    <string name="keyword">(验证|校验|动态|确认|随机|激活|兑换|认证|交易|授权|操作|密码|提取|安全)+(码|代码|号码|密码)</string>
-    <string name="tigger">(是|为|:|：| |G-)+(:|：| |G-|)</string>
-    <string name="copytext">已复制验证码:</string>
-    <string name="smstest">【xx银行】您正在使用xx银行xx支付快捷支付，验证码：233333,付款金额100.00元。[工作人员不会索取，请勿泄露]</string>
     <string name="explain">1：关键字\n关键字是短信中验证码的前一段，工具通过关键字找到验证码部分，比如：Google验证码是:223333工具找到验证码关键字而且只找一次就可以知道后面的验证码是多少了。(关键字支持正则表达式)
         \n2：触发字\n触发字是为了消除歧义而设定的一个参数，比如Google验证代码 223333和Google验证代码是:223333这样两个验证码，第一个关键字之后是（空格），而第二个关键字之后是（是:）还有其他的比如：Google验证代码是:G-223333这样的验证码。(触发字支持正则表达式)
         \n3：正则匹配验证码\n默认的正则表达式匹配的是数字验证码，你们可以通过百度学习正则表达式，写出自己的正则表达式匹配你的验证码
@@ -44,6 +40,7 @@
     <string name="githubCaptcha">https://github.com/zzyandzzy/captcha</string>
     <string name="copy">复制</string>
     <string name="captcha">验证码</string>
-    <string name="xposed">xposed</string>
+    <string name="xposed">Xposed</string>
+    <string name="xposed_systemuitext">添加状态栏时间文字</string>
     <string name="gdq"> i GDQ</string>
 </resources>

@@ -11,7 +11,8 @@ import static com.zzy.captcha.xposed.utils.XposedUtils.PACKAGE_SYSTEMUI;
  * Created by zzyandzzy on 2017/1/12.
  */
 
-public class init implements IXposedHookLoadPackage {
+public class init implements IXposedHookLoadPackage{
+
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
         switch (loadPackageParam.packageName){

@@ -172,7 +172,6 @@ public class EditTextDialog extends MaterialDialog {
 
     private PendingIntent createDisplayMessageIntent(Context context,String message,int notificationId) {
         Intent intent = new Intent(context, NotificationClickReceiver.class);
-        intent.putExtra("message",message);
         PendingIntent pendingIntent= PendingIntent.getBroadcast(context, 0, intent, notificationId);
         return pendingIntent;
     }

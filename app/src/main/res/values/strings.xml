@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">验证码工具</string>
+    <string name="app_name">验证码助手</string>
     <string name="setting">设置</string>
     <string name="licences">许可证</string>
     <string name="ok">确定</string>

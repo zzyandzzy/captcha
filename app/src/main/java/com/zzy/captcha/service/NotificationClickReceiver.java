@@ -19,7 +19,7 @@ public class NotificationClickReceiver extends BroadcastReceiver {
     private NotificationManager notificationManager;
     private XposedPreferencesUtils xposedPreferencesUtils;
     private SharedPreferencesUtils sharedPreferencesUtils;
-    private String regex,copytext,tigger,keyword;
+    private String message,regex,copytext,tigger,keyword;
     @Override
     public void onReceive(Context context, Intent intent) {
         xposedPreferencesUtils = new XposedPreferencesUtils(context);
@@ -28,16 +28,18 @@ public class NotificationClickReceiver extends BroadcastReceiver {
         if (notificationManager != null)
             notificationManager.cancel(RegexUtils.getNotificationId());
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
+            message = xposedPreferencesUtils.getString("smstest", RegexUtils.SmsTest);
             regex = xposedPreferencesUtils.getString("smsRegex", RegexUtils.SmsRegex);
             copytext = xposedPreferencesUtils.getString("copytext",RegexUtils.CpoyText);
             keyword = xposedPreferencesUtils.getString("keyword",RegexUtils.Keyword);
             tigger = xposedPreferencesUtils.getString("tigger",RegexUtils.TiggerRegex);
         }else {
+            message = sharedPreferencesUtils.getString("smstest", RegexUtils.SmsTest);
             regex = sharedPreferencesUtils.getString("smsRegex", RegexUtils.SmsRegex);
             copytext = sharedPreferencesUtils.getString("copytext",RegexUtils.CpoyText);
             keyword = sharedPreferencesUtils.getString("keyword",RegexUtils.Keyword);
             tigger = sharedPreferencesUtils.getString("tigger",RegexUtils.TiggerRegex);
         }
-        CopyCaptchaUtila.CopyCptcha(context,intent.getStringExtra("message"), regex,keyword,tigger,copytext);
+        CopyCaptchaUtila.CopyCptcha(context,message, regex,keyword,tigger,copytext);
     }
 }

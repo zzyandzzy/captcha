@@ -25,7 +25,7 @@ public class CopyCaptchaUtila {
                     Log.e("yzm",matches.get(i));
                 String yzm = RegexUtils.getReplaceFirst(matches.get(0),
                         keyword + tigger,"");
-                yzm = RegexUtils.getReplaceAll(yzm,"[^0-9]","");
+                //yzm = RegexUtils.getReplaceAll(yzm,"[^0-9a-zA-Z]","");
                 clipboardManager.setText(yzm);
                 Toast.makeText(context,copytext + clipboardManager.getText().toString()
                         ,Toast.LENGTH_SHORT).show();

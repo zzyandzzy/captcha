@@ -3,3 +3,10 @@ captcha
 <br>这是一个验证码复制工具
 <br>用到的库地址[material-setting](https://github.com/zzyandzzy/materialsetting)
 <br>酷安下载地址[download](http://www.coolapk.com/apk/com.zzy.captcha)
+![](https://github.com/zzyandzzy/captcha/raw/master/logo/1.png)
+![](https://github.com/zzyandzzy/captcha/raw/master/logo/2.png)
+![](https://github.com/zzyandzzy/captcha/raw/master/logo/3.png)
+![](https://github.com/zzyandzzy/captcha/raw/master/logo/4.png)
+![](https://github.com/zzyandzzy/captcha/raw/master/logo/5.png)
+![](https://github.com/zzyandzzy/captcha/raw/master/logo/6.png)
+![](https://github.com/zzyandzzy/captcha/raw/master/logo/7.png)

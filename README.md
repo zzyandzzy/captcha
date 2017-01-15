@@ -2,15 +2,16 @@
 
 [![Apache License 2.0][103]][104]
 
-这是一个验证码复制工具
-用到的库:[material-setting](https://github.com/zzyandzzy/materialsetting)
+这是一个验证码复制工具<br>
+用到的库:[material-setting](https://github.com/zzyandzzy/materialsetting)<br>
 [酷安下载地址](http://www.coolapk.com/apk/com.zzy.captcha)
 
 Screenshots
 --------
 
-![app1][1]![app2][2]![app3][3]<br>
-![app4][4]![app5][5]![app6][6]
+![app1][1]![app2][2]<br>
+![app3][3]![app4][4]<br>
+![app5][5]![app6][6]
 
 License
 -------

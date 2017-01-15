@@ -1,25 +1,89 @@
 package com.zzy.captcha.utils;
 
-import android.content.Context;
-
-import com.zzy.captcha.R;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * Created by zzyandzzy on 2017/1/10.
+ * Created by zzyandzzy on 2017/1/15.
  */
 
 public class RegexUtils {
-    public static final String TiggerRegex = "(是|为|:|：| |G-)+(:|：|G-|\\[|【| |)";
-    public static final String SmsRegex = "(?<![0-9a-zA-Z])([0-9a-zA-Z]{4,10})(?![0-9a-zA-Z])";
-    public static final String Keyword = "(验证|校验|动态|确认|随机|激活|兑换|认证|交易|授权|操作|密码|提取|安全)+(码|代码|号码|密码)";
-    public static final String CpoyText = "已复制验证码:";
-    public static final String SmsTest = "【xx银行】您正在使用xx银行xx支付快捷支付，验证码：233333,付款金额100.00元。[工作人员不会索取，请勿泄露]";
-    public static final String PackageName = "com.zzy.captcha";
-
-    public static String getExplain(Context context){
-        return context.getResources().getString(R.string.explain);
+    private RegexUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
     }
-    public static int getNotificationId(){
-        return 100;
+
+    /**
+     * 判断是否匹配正则
+     *
+     * @param regex 正则表达式
+     * @param input 要匹配的字符串
+     * @return {@code true}: 匹配<br>{@code false}: 不匹配
+     */
+    public static boolean isMatch(String regex, CharSequence input) {
+        return input != null && input.length() > 0 && Pattern.matches(regex, input);
+    }
+
+    public static boolean findMatch(String regex,CharSequence input){
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(input);
+        return input != null && input.length() > 0 && m.find();
+    }
+
+    /**
+     * 获取正则匹配的部分
+     *
+     * @param regex 正则表达式
+     * @param input 要匹配的字符串
+     * @return 正则匹配的部分
+     */
+    public static List<String> getMatches(String regex, CharSequence input) {
+        if (input == null) return null;
+        List<String> matches = new ArrayList<>();
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+        while (matcher.find()) {
+            matches.add(matcher.group());
+        }
+        return matches;
+    }
+
+    /**
+     * 获取正则匹配分组
+     *
+     * @param input 要分组的字符串
+     * @param regex 正则表达式
+     * @return 正则匹配分组
+     */
+    public static String[] getSplits(String input, String regex) {
+        if (input == null) return null;
+        return input.split(regex);
+    }
+
+    /**
+     * 替换正则匹配的第一部分
+     *
+     * @param input       要替换的字符串
+     * @param regex       正则表达式
+     * @param replacement 代替者
+     * @return 替换正则匹配的第一部分
+     */
+    public static String getReplaceFirst(String input, String regex, String replacement) {
+        if (input == null) return null;
+        return Pattern.compile(regex).matcher(input).replaceFirst(replacement);
+    }
+
+    /**
+     * 替换所有正则匹配的部分
+     *
+     * @param input       要替换的字符串
+     * @param regex       正则表达式
+     * @param replacement 代替者
+     * @return 替换所有正则匹配的部分
+     */
+    public static String getReplaceAll(String input, String regex, String replacement) {
+        if (input == null) return null;
+        return Pattern.compile(regex).matcher(input).replaceAll(replacement);
     }
 }

@@ -23,8 +23,7 @@ public class PermissionActivity extends AppCompatActivity {
     private String[] PER_ALL = {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE",
-            "android.permission.SEND_SMS",
-            "android.permission.SEND_SMS",
+            "android.permission.READ_SMS",
             "android.permission.READ_PHONE_STATE"};
 
     @Override

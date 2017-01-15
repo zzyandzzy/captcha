@@ -16,7 +16,7 @@ public class XposedPreferencesUtils {
 
     public XposedPreferencesUtils(Context context){
         this.context = context;
-        //xml = new File("/data/data/"+RegexUtils.getPackageName()+"/shared_prefs/"+"xposed.xml");
+        //xml = new File("/data/data/"+Utils.getPackageName()+"/shared_prefs/"+"xposed.xml");
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
             sharedPreferences = context.getSharedPreferences("xposed",Context.MODE_WORLD_READABLE);
             editor = sharedPreferences.edit();

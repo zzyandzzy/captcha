@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import com.zzy.captcha.utils.CopyCaptchaUtila;
-import com.zzy.captcha.utils.RegexUtils;
+import com.zzy.captcha.utils.Utils;
 import com.zzy.captcha.utils.SharedPreferencesUtils;
 import com.zzy.captcha.utils.XposedPreferencesUtils;
 
@@ -26,19 +26,19 @@ public class NotificationClickReceiver extends BroadcastReceiver {
         sharedPreferencesUtils = new SharedPreferencesUtils(context);
         notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null)
-            notificationManager.cancel(RegexUtils.getNotificationId());
+            notificationManager.cancel(Utils.getNotificationId());
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
-            message = xposedPreferencesUtils.getString("smstest", RegexUtils.SmsTest);
-            regex = xposedPreferencesUtils.getString("smsRegex", RegexUtils.SmsRegex);
-            copytext = xposedPreferencesUtils.getString("copytext",RegexUtils.CpoyText);
-            keyword = xposedPreferencesUtils.getString("keyword",RegexUtils.Keyword);
-            tigger = xposedPreferencesUtils.getString("tigger",RegexUtils.TiggerRegex);
+            message = xposedPreferencesUtils.getString("smstest", Utils.SmsTest);
+            regex = xposedPreferencesUtils.getString("smsRegex", Utils.SmsRegex);
+            copytext = xposedPreferencesUtils.getString("copytext", Utils.CpoyText);
+            keyword = xposedPreferencesUtils.getString("keyword", Utils.Keyword);
+            tigger = xposedPreferencesUtils.getString("tigger", Utils.TiggerRegex);
         }else {
-            message = sharedPreferencesUtils.getString("smstest", RegexUtils.SmsTest);
-            regex = sharedPreferencesUtils.getString("smsRegex", RegexUtils.SmsRegex);
-            copytext = sharedPreferencesUtils.getString("copytext",RegexUtils.CpoyText);
-            keyword = sharedPreferencesUtils.getString("keyword",RegexUtils.Keyword);
-            tigger = sharedPreferencesUtils.getString("tigger",RegexUtils.TiggerRegex);
+            message = sharedPreferencesUtils.getString("smstest", Utils.SmsTest);
+            regex = sharedPreferencesUtils.getString("smsRegex", Utils.SmsRegex);
+            copytext = sharedPreferencesUtils.getString("copytext", Utils.CpoyText);
+            keyword = sharedPreferencesUtils.getString("keyword", Utils.Keyword);
+            tigger = sharedPreferencesUtils.getString("tigger", Utils.TiggerRegex);
         }
         CopyCaptchaUtila.CopyCptcha(context,message, regex,keyword,tigger,copytext);
     }

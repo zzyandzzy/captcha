@@ -5,10 +5,10 @@ android {
     buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "com.zzy.captcha"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -26,13 +26,8 @@ dependencies {
 //    })
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
-
+    compile project(':library')
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.1'
-    compile 'com.blankj:utilcode:1.3.5'
     compile 'me.drakeet.materialdialog:library:1.3.1'
-    compile 'com.github.daniel-stoneuk:material-about-library:1.4.0'
-    compile "com.mikepenz:iconics-core:2.8.2@aar"
-    compile 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
-    compile 'com.mikepenz:community-material-typeface:1.7.22.1@aar'
     provided files('libs/xposed-api-82.jar')
 }

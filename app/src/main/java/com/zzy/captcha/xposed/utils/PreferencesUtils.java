@@ -1,6 +1,6 @@
 package com.zzy.captcha.xposed.utils;
 
-import com.zzy.captcha.utils.RegexUtils;
+import com.zzy.captcha.utils.Utils;
 
 import de.robv.android.xposed.XSharedPreferences;
 
@@ -13,7 +13,7 @@ public class PreferencesUtils {
 
     private static XSharedPreferences getInstance() {
         if (instance == null) {
-            instance = new XSharedPreferences(RegexUtils.PackageName,"xposed");
+            instance = new XSharedPreferences(Utils.PackageName,"xposed");
             instance.makeWorldReadable();
         } else {
             instance.reload();

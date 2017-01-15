@@ -5,82 +5,86 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.view.View;
 import android.widget.Toast;
 
-import com.danielstone.materialaboutlibrary.ConvenienceBuilder;
-import com.danielstone.materialaboutlibrary.MaterialAboutActivity;
-import com.danielstone.materialaboutlibrary.model.MaterialAboutActionItem;
-import com.danielstone.materialaboutlibrary.model.MaterialAboutCard;
-import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
-import com.danielstone.materialaboutlibrary.model.MaterialAboutTitleItem;
-import com.mikepenz.community_material_typeface_library.CommunityMaterial;
-import com.mikepenz.google_material_typeface_library.GoogleMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
 import com.zzy.captcha.R;
 import com.zzy.captcha.ui.widget.EditTextDialog;
-import com.zzy.captcha.utils.RegexUtils;
+import com.zzy.captcha.ui.widget.HtmlDialog;
 import com.zzy.captcha.utils.SharedPreferencesUtils;
+import com.zzy.captcha.utils.Utils;
 import com.zzy.captcha.utils.XposedPreferencesUtils;
+import com.zzy.materialsettinglibrary.model.MaterialSettingActionItem;
+import com.zzy.materialsettinglibrary.model.MaterialSettingCard;
+import com.zzy.materialsettinglibrary.model.MaterialSettingCompoundButtonItem;
+import com.zzy.materialsettinglibrary.model.MaterialSettingItem;
+import com.zzy.materialsettinglibrary.model.MaterialSettingList;
+import com.zzy.materialsettinglibrary.model.MaterialSettingTitleItem;
+import com.zzy.materialsettinglibrary.ui.MaterialSettingActivity;
 
 import de.psdev.licensesdialog.LicensesDialog;
 import me.drakeet.materialdialog.MaterialDialog;
+
+import static com.zzy.captcha.R.string.smsVerifysubText;
 
 /**
  * Created by zzyandzzy on 2017/1/9.
  */
 
-public class SettingActivity extends MaterialAboutActivity {
-    private MaterialAboutCard.Builder appCardBuilder;
-    private MaterialAboutCard.Builder authorCardBuilder;
-    private MaterialAboutCard.Builder smsTestBuilder;
+public class SettingActivity extends MaterialSettingActivity {
+    private MaterialSettingCard.Builder appCardBuilder;
+    private MaterialSettingCard.Builder authorCardBuilder;
+    private MaterialSettingCard.Builder smsTestBuilder;
     private SharedPreferencesUtils sharedPreferencesUtils;
     private XposedPreferencesUtils xposedPreferencesUtils;
+    private PackageManager packageManager;
+    private HtmlDialog htmlDialog;
 
     @Override
-    protected MaterialAboutList getMaterialAboutList(final Context context) {
+    protected MaterialSettingList getMaterialSettingList(final Context context) {
         init();
-        appCardBuilder = new MaterialAboutCard.Builder();
-        appCardBuilder.addItem(new MaterialAboutTitleItem.Builder()
+        appCardBuilder = new MaterialSettingCard.Builder();
+        appCardBuilder.addItem(new MaterialSettingTitleItem.Builder()
                 .text(R.string.app_name)
                 .icon(R.mipmap.ic_launcher)
                 .build());
         try {
-            appCardBuilder.addItem(ConvenienceBuilder.createVersionActionItem(context,
-                    getString(R.string.version), new IconicsDrawable(context)
-                            .icon(GoogleMaterial.Icon.gmd_perm_device_information)
-                            .color(ContextCompat.getColor(context, R.color.icon))
-                            .sizeDp(18)));
+            appCardBuilder.addItem(new MaterialSettingActionItem.Builder()
+                    .text("更新日志")
+                    .subText(getString(R.string.version)+"("+packageManager.getPackageInfo(context.getPackageName(),0)
+                                    .versionName + ")" )
+                    .icon(R.drawable.ic_perm_device_information_black_24dp)
+                    .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
+                        @Override
+                        public void onClick() {
+                            htmlDialog = new HtmlDialog(context,"更新内容","明白");
+                            htmlDialog.show();
+                        }
+                    })
+                    .build());
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        appCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+        appCardBuilder.addItem(new MaterialSettingActionItem.Builder()
                 .text(R.string.licences)
-                .icon(new IconicsDrawable(context)
-                        .icon(GoogleMaterial.Icon.gmd_bookmark_border)
-                        .color(ContextCompat.getColor(context, R.color.icon))
-                        .sizeDp(18))
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .icon(context.getResources().getDrawable(R.drawable.ic_bookmark_border_black_24dp))
+                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
                         showLicensesDialog();
                     }
                 })
                 .build());
-        appCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+        appCardBuilder.addItem(new MaterialSettingActionItem.Builder()
                 .text(R.string.Instructions)
-                .icon(new IconicsDrawable(context)
-                        .icon(GoogleMaterial.Icon.gmd_info_outline)
-                        .color(ContextCompat.getColor(context, R.color.icon))
-                        .sizeDp(18))
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .icon(context.getResources().getDrawable(R.drawable.ic_info_outline_black_24dp))
+                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
                         final MaterialDialog materialDialog = new MaterialDialog(SettingActivity.this);
                         materialDialog.setTitle(R.string.Instructions);
-                        materialDialog.setMessage(RegexUtils.getExplain(SettingActivity.this));
+                        materialDialog.setMessage(Utils.getExplain(SettingActivity.this));
                         materialDialog.setPositiveButton(getString(R.string.know), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -92,115 +96,109 @@ public class SettingActivity extends MaterialAboutActivity {
                 })
                 .build());
 
-        smsTestBuilder = new MaterialAboutCard.Builder();
+        smsTestBuilder = new MaterialSettingCard.Builder();
         smsTestBuilder.title(R.string.function);
-        smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
+        smsTestBuilder.addItem(new MaterialSettingActionItem.Builder()
                 .text(R.string.smstestText)
                 .subText(R.string.smstestSubText)
-                .icon(new IconicsDrawable(context)
-                        .icon(GoogleMaterial.Icon.gmd_sms)
-                        .color(ContextCompat.getColor(context, R.color.icon))
-                        .sizeDp(18))
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .icon(context.getResources().getDrawable(R.drawable.ic_sms_black_24dp))
+                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
                         String regex;
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-                            regex = xposedPreferencesUtils.getString("smstest",RegexUtils.SmsTest);
+                            regex = xposedPreferencesUtils.getString("smstest", Utils.SmsTest);
                         else
-                            regex = sharedPreferencesUtils.getString("smstest",RegexUtils.SmsTest);
+                            regex = sharedPreferencesUtils.getString("smstest", Utils.SmsTest);
                         EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.smstestText)
                                 ,regex,getString(R.string.editDialog_test),getString(R.string.editDialog_cancel),"smstest");
                     }
                 })
                 .build());
-        smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
+        smsTestBuilder.addItem(new MaterialSettingActionItem.Builder()
                 .text(R.string.keywordText)
                 .subText(R.string.keywordSubtext)
-                .icon(new IconicsDrawable(context)
-                        .icon(GoogleMaterial.Icon.gmd_short_text)
-                        .color(ContextCompat.getColor(context, R.color.icon))
-                        .sizeDp(18))
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .icon(context.getResources().getDrawable(R.drawable.ic_short_text_black_24dp))
+                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
                         String regex;
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-                            regex = xposedPreferencesUtils.getString("keyword",RegexUtils.Keyword);
+                            regex = xposedPreferencesUtils.getString("keyword", Utils.Keyword);
                         else
-                            regex = sharedPreferencesUtils.getString("keyword",RegexUtils.Keyword);
+                            regex = sharedPreferencesUtils.getString("keyword", Utils.Keyword);
                         EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.keywordText)
                                 ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_close),"keyword");
                     }
                 })
                 .build());
-        smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
+        smsTestBuilder.addItem(new MaterialSettingActionItem.Builder()
                 .text(R.string.tiggerText)
                 .subText(R.string.tiggerSubText)
-                .icon(new IconicsDrawable(context)
-                        .icon(GoogleMaterial.Icon.gmd_text_format)
-                        .color(ContextCompat.getColor(context, R.color.icon))
-                        .sizeDp(18))
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .icon(context.getResources().getDrawable(R.drawable.ic_text_format_black_24dp))
+                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
                         String regex;
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-                            regex = xposedPreferencesUtils.getString("tigger",RegexUtils.TiggerRegex);
+                            regex = xposedPreferencesUtils.getString("tigger", Utils.TiggerRegex);
                         else
-                            regex = sharedPreferencesUtils.getString("tigger",RegexUtils.TiggerRegex);
+                            regex = sharedPreferencesUtils.getString("tigger", Utils.TiggerRegex);
                         EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.tiggerText)
                                 ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_close),"tigger");
                     }
                 })
                 .build());
-        smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
+        smsTestBuilder.addItem(new MaterialSettingActionItem.Builder()
                 .text(R.string.smsRegexText)
                 .subText(R.string.smsRegexSubText)
-                .icon(new IconicsDrawable(context)
-                        .icon(GoogleMaterial.Icon.gmd_edit)
-                        .color(ContextCompat.getColor(context, R.color.icon))
-                        .sizeDp(18))
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .icon(context.getResources().getDrawable(R.drawable.ic_edit_black_24dp))
+                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
                         String regex;
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-                            regex = xposedPreferencesUtils.getString("smsRegex",RegexUtils.SmsRegex);
+                            regex = xposedPreferencesUtils.getString("smsRegex", Utils.SmsRegex);
                         else
-                            regex = sharedPreferencesUtils.getString("smsRegex",RegexUtils.SmsRegex);
+                            regex = sharedPreferencesUtils.getString("smsRegex", Utils.SmsRegex);
                         EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.smsRegexText)
                                 ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_close),"smsregex");
                     }
                 })
                 .build());
-        smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
+        smsTestBuilder.addItem(new MaterialSettingCompoundButtonItem.Builder()
+                .setItemType(MaterialSettingItem.ItemType.CHECKBOX_ITEM)
+                .key("smsVerify")
+                .defValue(false)
+                .defText(R.string.smsVerifyText)
+                .subDefText(smsVerifysubText)
+                .setOnCheckedChangeListener(new MaterialSettingCompoundButtonItem.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(String key, boolean isChanged) {
+                    }
+                })
+                .build());
+        smsTestBuilder.addItem(new MaterialSettingActionItem.Builder()
                 .text(Html.fromHtml("<font color="+getResources().getColor(R.color.colorPrimary) + ">"+getString(R.string.copyText)+"</font>"))
                 .subText(Html.fromHtml("<font color="+getResources().getColor(R.color.colorPrimary)+">"+getString(R.string.copytextSubText)+"</font>"))
-                .icon(new IconicsDrawable(context)
-                        .icon(GoogleMaterial.Icon.gmd_text_fields)
-                        .color(ContextCompat.getColor(context, R.color.colorPrimary))
-                        .sizeDp(18))
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .icon(context.getResources().getDrawable(R.drawable.ic_text_fields_black_24dp))
+                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
                         String regex;
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-                            regex = xposedPreferencesUtils.getString("copytext",RegexUtils.CpoyText);
+                            regex = xposedPreferencesUtils.getString("copytext", Utils.CpoyText);
                         else
-                            regex = sharedPreferencesUtils.getString("copytext",RegexUtils.CpoyText);
+                            regex = sharedPreferencesUtils.getString("copytext", Utils.CpoyText);
                         EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.copyText)
                                 ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_close),"copytext");
                     }
                 })
                 .build());
-        smsTestBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text(Html.fromHtml("<font color="+getResources().getColor(R.color.colorRed) + ">"+getString(R.string.xposed)+"</font>"))
-                .icon(new IconicsDrawable(context)
-                        .icon(GoogleMaterial.Icon.gmd_extension)
-                        .color(ContextCompat.getColor(context, R.color.colorRed))
-                        .sizeDp(18))
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+        smsTestBuilder.addItem(new MaterialSettingActionItem.Builder()
+                .text(Html.fromHtml("<font color="+getResources().getColor(R.color.colorAccent) + ">"+getString(R.string.xposed)+"</font>"))
+                .icon(context.getResources().getDrawable(R.drawable.ic_extension_black_24dp))
+                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
@@ -214,42 +212,40 @@ public class SettingActivity extends MaterialAboutActivity {
                 })
                 .build());
 
-        authorCardBuilder = new MaterialAboutCard.Builder();
+        authorCardBuilder = new MaterialSettingCard.Builder();
         authorCardBuilder.title(R.string.about);
-        authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+        authorCardBuilder.addItem(new MaterialSettingActionItem.Builder()
                 .text(R.string.author)
                 .subText(R.string.authorEmail)
-                .icon(new IconicsDrawable(context)
-                        .icon(GoogleMaterial.Icon.gmd_person)
-                        .color(ContextCompat.getColor(context, R.color.icon))
-                        .sizeDp(18))
-                .setOnClickListener(ConvenienceBuilder.createWebsiteOnClickAction(context,
-                        Uri.parse(getString(R.string.githubAuthor))))
+                .icon(context.getResources().getDrawable(R.drawable.ic_person_black_24dp))
+                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
+                    @Override
+                    public void onClick() {
+                        startUrl(getString(R.string.githubAuthor));
+                    }
+                })
                 .build());
-        authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+        authorCardBuilder.addItem(new MaterialSettingActionItem.Builder()
                 .text(R.string.addGroup)
                 .subText(R.string.icodeGroup)
-                .icon(new IconicsDrawable(context)
-                        .icon(GoogleMaterial.Icon.gmd_group_add)
-                        .color(ContextCompat.getColor(context, R.color.icon))
-                        .sizeDp(24))
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .icon(context.getResources().getDrawable(R.drawable.ic_group_add_black_24dp))
+                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
                         joinQQGroup("7zlOs8QB-TpNjClr2YTMphCK3lriWf6t");
                     }
                 })
                 .build());
-        authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text(R.string.github)
-                .icon(new IconicsDrawable(context)
-                        .icon(CommunityMaterial.Icon.cmd_github_circle)
-                        .color(ContextCompat.getColor(context, R.color.icon))
-                        .sizeDp(18))
-                .setOnClickListener(ConvenienceBuilder.createWebsiteOnClickAction(context,
-                        Uri.parse(getString(R.string.githubCaptcha))))
+        authorCardBuilder.addItem(new MaterialSettingActionItem.Builder()
+                .subText(R.string.github)
+                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
+                    @Override
+                    public void onClick() {
+                        startUrl(getString(R.string.githubCaptcha));
+                    }
+                })
                 .build());
-        return new MaterialAboutList(appCardBuilder.build()
+        return new MaterialSettingList(appCardBuilder.build()
                 ,smsTestBuilder.build()
                 ,authorCardBuilder.build());
     }
@@ -257,6 +253,7 @@ public class SettingActivity extends MaterialAboutActivity {
     private void init() {
         sharedPreferencesUtils = new SharedPreferencesUtils(this);
         xposedPreferencesUtils = new XposedPreferencesUtils(this);
+        packageManager = this.getPackageManager();
     }
 
     @Override
@@ -271,6 +268,11 @@ public class SettingActivity extends MaterialAboutActivity {
                 .setCloseText(R.string.ok)
                 .build()
                 .show();
+    }
+
+    public void startUrl(String url){
+        Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+        startActivity(intent);
     }
 
     @Override

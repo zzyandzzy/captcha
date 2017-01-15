@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.zzy.captcha.R;
 import com.zzy.captcha.service.NotificationClickReceiver;
-import com.zzy.captcha.utils.RegexUtils;
+import com.zzy.captcha.utils.Utils;
 import com.zzy.captcha.utils.SharedPreferencesUtils;
 import com.zzy.captcha.utils.XposedPreferencesUtils;
 
@@ -46,7 +46,6 @@ public class EditTextDialog extends MaterialDialog {
     }
 
     private void initShowDialog(String defineMessage, String ok,String close, final String lis) {
-        message = (EditText) view.findViewById(R.id.dialog_edit_message);
         message.setText(defineMessage);
         this.setPositiveButton(ok, new View.OnClickListener() {
             @Override
@@ -115,16 +114,16 @@ public class EditTextDialog extends MaterialDialog {
                 public void onClick(View v) {
                     switch (lis){
                         case "smsregex":
-                            message.setText(RegexUtils.SmsRegex);
+                            message.setText(Utils.SmsRegex);
                             break;
                         case "keyword":
-                            message.setText(RegexUtils.Keyword);
+                            message.setText(Utils.Keyword);
                             break;
                         case "tigger":
-                            message.setText(RegexUtils.TiggerRegex);
+                            message.setText(Utils.TiggerRegex);
                             break;
                         case "copytext":
-                            message.setText(RegexUtils.CpoyText);
+                            message.setText(Utils.CpoyText);
                             break;
                         default:
                             dismiss();
@@ -146,16 +145,17 @@ public class EditTextDialog extends MaterialDialog {
     }
 
     private void init() {
-        view = LayoutInflater.from(context).inflate(R.layout.dialog_edit,null);
-        this.setContentView(view);
         xposedPreferencesUtils = new XposedPreferencesUtils(context);
         sharedPreferencesUtils = new SharedPreferencesUtils(context);
+        view = LayoutInflater.from(context).inflate(R.layout.dialog_edit,null);
+        this.setContentView(view);
+        message = (EditText) view.findViewById(R.id.dialog_edit_message);
     }
 
     private void addNotification(Context context, String title, String message) {
         //获取通知管理器服务
         notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        PendingIntent pendingIntent = createDisplayMessageIntent(context, message,RegexUtils.getNotificationId());
+        PendingIntent pendingIntent = createDisplayMessageIntent(context, message, Utils.getNotificationId());
         //新建一个notification
         Notification.Builder builder = new Notification.Builder(context)
                 .setTicker(message)
@@ -167,7 +167,7 @@ public class EditTextDialog extends MaterialDialog {
                 .setContentIntent(pendingIntent);
         builder.setFullScreenIntent(pendingIntent, true);
         //开始通知
-        notificationManager.notify(RegexUtils.getNotificationId(), builder.getNotification());
+        notificationManager.notify(Utils.getNotificationId(), builder.getNotification());
     }
 
     private PendingIntent createDisplayMessageIntent(Context context,String message,int notificationId) {

@@ -1,7 +1,5 @@
 package com.zzy.captcha.xposed;
 
-import com.zzy.captcha.xposed.hook.SystemUIHook;
-
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
@@ -17,7 +15,7 @@ public class init implements IXposedHookLoadPackage{
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
         switch (loadPackageParam.packageName){
             case PACKAGE_SYSTEMUI:
-                SystemUIHook.hookSystemUI(loadPackageParam.classLoader);
+                //SystemUIHook.hookSystemUI(loadPackageParam.classLoader);
                 break;
 //            case PACKAGE_MMS:
 //                SMSHook.hookPduParser(loadPackageParam);

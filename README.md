@@ -1,17 +1,17 @@
-#captcha
+#Captcha
 
 [![Apache License 2.0][103]][104]
 
 这是一个验证码复制工具
 
-用到的库:[material-setting](https://github.com/zzyandzzy/material-setting)
+用到的库:
+[material-setting](https://github.com/zzyandzzy/material-setting)
 
 [酷安下载地址](http://www.coolapk.com/apk/com.zzy.captcha)
 
 Screenshots
 --------
 
-| Screenshots | Screenshots |
 |:-:|:-:|:-:|:-:|
 | ![app1][1] | ![app2][2] |
 | ![app3][3] | ![app4][4] |

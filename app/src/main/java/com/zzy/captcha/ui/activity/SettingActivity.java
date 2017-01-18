@@ -171,12 +171,7 @@ public class SettingActivity extends MaterialSettingActivity {
                 .key("smsVerify")
                 .defValue(false)
                 .defText(R.string.smsVerifyText)
-                .subDefText(smsVerifysubText)
-                .setOnCheckedChangeListener(new MaterialSettingCompoundButtonItem.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(String key, boolean isChanged) {
-                    }
-                })
+                .defSubText(smsVerifysubText)
                 .build());
         smsTestBuilder.addItem(new MaterialSettingActionItem.Builder()
                 .text(Html.fromHtml("<font color="+getResources().getColor(R.color.colorPrimary) + ">"+getString(R.string.copyText)+"</font>"))

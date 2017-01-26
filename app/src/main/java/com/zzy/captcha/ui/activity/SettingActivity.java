@@ -168,6 +168,7 @@ public class SettingActivity extends MaterialSettingActivity {
                 .build());
         smsTestBuilder.addItem(new MaterialSettingCompoundButtonItem.Builder()
                 .setItemType(MaterialSettingItem.ItemType.CHECKBOX_ITEM)
+                .setButtonPosition(MaterialSettingItem.ButtonPosition.LEFT)
                 .key("smsVerify")
                 .defValue(false)
                 .defText(R.string.smsVerifyText)
@@ -190,22 +191,22 @@ public class SettingActivity extends MaterialSettingActivity {
                     }
                 })
                 .build());
-        smsTestBuilder.addItem(new MaterialSettingActionItem.Builder()
-                .text(Html.fromHtml("<font color="+getResources().getColor(R.color.colorAccent) + ">"+getString(R.string.xposed)+"</font>"))
-                .icon(context.getResources().getDrawable(R.drawable.ic_extension_black_24dp))
-                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
-                    @Override
-                    public void onClick() {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
-                            String regex;
-                            regex = xposedPreferencesUtils.getString("systemuitext",getString(R.string.gdq));
-                            EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.xposed_systemuitext)
-                                    ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_cancel),"systemuitext");
-                        }else
-                            Toast.makeText(SettingActivity.this,"Xposed不支持安卓7.0",Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .build());
+//        smsTestBuilder.addItem(new MaterialSettingActionItem.Builder()
+//                .text(Html.fromHtml("<font color="+getResources().getColor(R.color.colorAccent) + ">"+getString(R.string.xposed)+"</font>"))
+//                .icon(context.getResources().getDrawable(R.drawable.ic_extension_black_24dp))
+//                .setOnClickListener(new MaterialSettingActionItem.OnClickListener() {
+//                    @Override
+//                    public void onClick() {
+//                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
+//                            String regex;
+//                            regex = xposedPreferencesUtils.getString("systemuitext",getString(R.string.gdq));
+//                            EditTextDialog editTextDialog = new EditTextDialog(SettingActivity.this,getString(R.string.xposed_systemuitext)
+//                                    ,regex,getString(R.string.editDialog_ok),getString(R.string.editDialog_cancel),"systemuitext");
+//                        }else
+//                            Toast.makeText(SettingActivity.this,"Xposed不支持安卓7.0",Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//                .build());
 
         authorCardBuilder = new MaterialSettingCard.Builder();
         authorCardBuilder.title(R.string.about);
